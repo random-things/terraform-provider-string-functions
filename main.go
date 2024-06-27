@@ -35,10 +35,9 @@ func main() {
 	flag.Parse()
 
 	opts := providerserver.ServeOpts{
-		// TODO: Update this string with the published name of your provider.
 		// Also update the tfplugindocs generate command to either remove the
 		// -provider-name flag or set its value to the updated provider name.
-		Address: "hashicorp.com/edu/string-functions",
+		Address: "registry.hashicorp.io/random-things/string-functions",
 		Debug:   debug,
 	}
 
