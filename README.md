@@ -1,3 +1,15 @@
+## Generating documentation
+
+```
+go generate ./...
+```
+
+## Linting
+
+```
+golangci-lint run
+```
+
 ## Running tests
 
 ```

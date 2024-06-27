@@ -3,7 +3,7 @@
 FEATURES:
 
 * **New Function**: `chunk_strings`
-* **New Function**: `limited_split`
+* **New Function**: `limitedgo f_split`
 * **New Function**: `limited_rsplit`
 * **New Function**: `strpos`
 * **New Function**: `strrpos`

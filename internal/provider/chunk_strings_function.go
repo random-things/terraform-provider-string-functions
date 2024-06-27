@@ -69,9 +69,9 @@ func chunkStrings(strs []string, chunkSize int, delimiter string) []string {
 	currentLength := 0
 	for i := 0; i < len(strs); i++ {
 		// TODO: Handle case where one string is longer than the chunkSize.
-		if len(strs[i]) > chunkSize {
-
-		}
+		//if len(strs[i]) > chunkSize {
+		//
+		//}
 
 		currentLength += len(strs[i])
 		if i == len(strs)-1 {

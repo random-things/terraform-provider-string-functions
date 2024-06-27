@@ -23,7 +23,7 @@ type stringFunctionsProvider struct {
 }
 
 func (p *stringFunctionsProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
-	tflog.Info(ctx, "Setting up string-functions metadata...")
+	tflog.Info(ctx, "Loading string-functions metadata...")
 	resp.TypeName = "string-functions"
 	resp.Version = p.version
 }
