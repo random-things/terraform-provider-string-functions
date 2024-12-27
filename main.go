@@ -37,7 +37,7 @@ func main() {
 	opts := providerserver.ServeOpts{
 		// Also update the tfplugindocs generate command to either remove the
 		// -provider-name flag or set its value to the updated provider name.
-		Address: "registry.hashicorp.io/random-things/string-functions",
+		Address: "registry.terraform.io/random-things/string-functions",
 		Debug:   debug,
 	}
 
