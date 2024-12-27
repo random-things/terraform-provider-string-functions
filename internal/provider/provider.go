@@ -42,6 +42,7 @@ func (*stringFunctionsProvider) Functions(_ context.Context) []func() function.F
 		NewChunkStringsFunction,
 		NewLimitedSplitFunction,
 		NewLimitedRSplitFunction,
+		NewMultiReplaceFunction,
 		NewStrRPosFunction,
 		NewStrPosFunction,
 	}
