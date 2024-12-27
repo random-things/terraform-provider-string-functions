@@ -22,7 +22,8 @@
 
 `chunk_strings(inputs list of string, chunk_size number, delimiter string) list of string`
 
-Chunk a string into an array of smaller strings joined by a delimiter.
+Chunk a string into an array of smaller strings joined by a delimiter. Note that `chunk_size`
+represents the maximum character length of each chunk, not the number of items in the chunk.
 
 Example:
 
@@ -35,7 +36,7 @@ output "chunked" {
   value = local.chunked
 }
 
-# chunked = ["a,b", "c,d", "e"]
+# chunked = ["a,", "b,", "c,", "d,", "e"]
 ```
 
 ## limited_rsplit
