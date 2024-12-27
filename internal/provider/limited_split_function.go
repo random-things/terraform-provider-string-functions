@@ -46,15 +46,15 @@ func (f *LimitedSplitFunction) Definition(ctx context.Context, req function.Defi
 func (f *LimitedSplitFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	var input string
 	var delimiter string
-	var timesToSplit int
+	var maxParts int
 
-	resp.Error = function.ConcatFuncErrors(req.Arguments.Get(ctx, &input, &delimiter, &timesToSplit))
+	resp.Error = function.ConcatFuncErrors(req.Arguments.Get(ctx, &input, &delimiter, &maxParts))
 
-	splitStrings := limitedSplit(input, delimiter, timesToSplit)
+	splitStrings := limitedSplit(input, delimiter, maxParts)
 
 	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, splitStrings))
 }
 
-func limitedSplit(input string, delimiter string, timesToSplit int) []string {
-	return strings.SplitN(input, delimiter, timesToSplit)
+func limitedSplit(input string, delimiter string, maxParts int) []string {
+	return strings.SplitN(input, delimiter, maxParts)
 }
