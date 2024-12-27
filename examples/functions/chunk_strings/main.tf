@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     string-functions = {
-      source = "registry.hashicorp.io/random-things/string-functions"
+      source = "registry.terraform.io/random-things/string-functions"
     }
   }
   required_version = ">= 1.8.0"
