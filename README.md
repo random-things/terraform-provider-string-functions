@@ -5,6 +5,7 @@
   * [limited_rsplit](#limited_rsplit)
   * [limited_split](#limited_split)
   * [multi_replace](#multi_replace)
+  * [regex_escape](#regex_escape)
   * [strpos](#strpos)
   * [strrpos](#strrpos)
 * [Command line actions](#command-line-actions)
@@ -103,6 +104,27 @@ output "replaced" {
 # replaced = "z|b|c|d|e"
 ```
 
+## regex_escape
+
+Escape a string containing regular expressions using Go's [`regexp.QuoteMeta`](https://pkg.go.dev/regexp#QuoteMeta).
+
+`regex_escape(input string) string`
+
+Example:
+
+```hcl
+locals {
+  escaped = regex_escape("a.b.c")
+}
+
+output "escaped" {
+  value = local.escaped
+}
+
+# escaped = "a\.b\.c"
+# Without -raw, this looks like "a\\.b\\.c"
+```
+
 ## strpos
 
 Find the position of the first occurrence of a substring in a string.
@@ -174,7 +196,7 @@ cd ../..
 ## Running an example
 
 ```
-cd examples/multi_replace
+cd examples/functions/multi_replace
 terraform init
 terraform plan
 
