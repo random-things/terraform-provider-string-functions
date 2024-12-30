@@ -6,6 +6,8 @@
   * [limited_split](#limited_split)
   * [multi_replace](#multi_replace)
   * [regex_escape](#regex_escape)
+  * [shell_escape](#shell_escape)
+  * [shell_escape_cmd](#shell_escape_cmd)
   * [strpos](#strpos)
   * [strrpos](#strrpos)
 * [Command line actions](#command-line-actions)
@@ -123,6 +125,46 @@ output "escaped" {
 
 # escaped = "a\.b\.c"
 # Without -raw, this looks like "a\\.b\\.c"
+```
+
+## shell_escape
+
+Escape a string containing shell metacharacters.
+
+`shell_escape(input string) string`
+
+Example:
+
+```hcl
+locals {
+  escaped = shell_escape("\"hi\"")
+}
+
+output "escaped" {
+  value = local.escaped
+}
+
+# escaped = "'\"hi\"'"
+```
+
+## shell_escape_cmd
+
+Escape a string containing shell metacharacters for use in a shell command.
+
+`shell_escape_cmd(input string) string`
+
+Example:
+
+```hcl
+locals {
+  escaped = shell_escape_cmd(["echo", "hi there"])
+}
+
+output "escaped" {
+  value = local.escaped
+}
+
+# escaped = "echo 'hi there'"
 ```
 
 ## strpos
