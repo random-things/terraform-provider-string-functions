@@ -44,6 +44,8 @@ func (*stringFunctionsProvider) Functions(_ context.Context) []func() function.F
 		NewLimitedRSplitFunction,
 		NewMultiReplaceFunction,
 		NewRegExEscapeFunction,
+		NewShellEscapeFunction,
+		NewShellEscapeCmdFunction,
 		NewStrRPosFunction,
 		NewStrPosFunction,
 	}

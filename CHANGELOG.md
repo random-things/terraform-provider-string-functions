@@ -3,13 +3,18 @@
 Releases:
 
 * [Unreleased](#unreleased)
+* [v0.3.0](#v030)
 * [v0.2.0](#v020)
 * [v0.1.0](#v010)
 
 ## Unreleased
 
+## v0.3.0
+
 FEATURES:
 
+* ✨ Function: `shell_escape`
+* ✨ Function: `shell_escape_cmd`
 * ✨ Function: `regex_escape`
 * 📝 Documentation cleanup, function descriptions and examples in [README.md](README.md)
 * ♻️ Refactor: Updating references to `registry.hashicorp.io` to `registry.terraform.io`
