@@ -151,7 +151,7 @@ output "escaped" {
 
 Escape a string containing shell metacharacters for use in a shell command.
 
-`shell_escape_cmd(input string) string`
+`shell_escape_cmd(input list of string) string`
 
 Example:
 
