@@ -8,6 +8,9 @@ Releases:
 
 ## Unreleased
 
+FEATURES:
+
+* ✨ Function: `regex_escape`
 * 📝 Documentation cleanup, function descriptions and examples in [README.md](README.md)
 * ♻️ Refactor: Updating references to `registry.hashicorp.io` to `registry.terraform.io`
 * ♻️ Refactor: Renaming `timesToSplit` to `maxParts` to clarify the parameter's purpose

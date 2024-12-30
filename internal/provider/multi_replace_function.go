@@ -44,9 +44,9 @@ func (f *MultiReplaceFunction) Run(ctx context.Context, req function.RunRequest,
 
 	resp.Error = function.ConcatFuncErrors(req.Arguments.Get(ctx, &input, &replacements))
 
-	pos := multiReplace(input, replacements)
+	output := multiReplace(input, replacements)
 
-	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, pos))
+	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, output))
 }
 
 func multiReplace(input string, replacements map[string]string) string {
