@@ -9,6 +9,12 @@ Releases:
 
 ## Unreleased
 
+FEATURES:
+
+* ⬆️ Upgrade: terraform-plugin-go 0.25.0 -> 0.26.0
+* ⬆️ Upgrade: actions/setup-go 5.2.0 -> 5.3.0
+* ⬆️ Upgrade: golangci/golangci-lint-action 6.1.1 -> 6.2.0
+
 ## v0.3.0
 
 FEATURES:
