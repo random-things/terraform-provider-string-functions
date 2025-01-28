@@ -11,9 +11,9 @@ Releases:
 
 FEATURES:
 
-* ⬆️ Upgrade: terraform-plugin-go 0.25.0 -> 0.26.0
-* ⬆️ Upgrade: actions/setup-go 5.2.0 -> 5.3.0
-* ⬆️ Upgrade: golangci/golangci-lint-action 6.1.1 -> 6.2.0
+* ⬆️ Upgrade: terraform-plugin-go `0.25.0 -> 0.26.0`
+* ⬆️ Upgrade: actions/setup-go `5.2.0 -> 5.3.0`
+* ⬆️ Upgrade: golangci/golangci-lint-action `6.1.1 -> 6.2.0`
 
 ## v0.3.0
 
@@ -23,8 +23,8 @@ FEATURES:
 * ✨ Function: `shell_escape_cmd`
 * ✨ Function: `regex_escape`
 * 📝 Documentation cleanup, function descriptions and examples in [README.md](README.md)
-* ♻️ Refactor: Updating references to `registry.hashicorp.io` to `registry.terraform.io`
-* ♻️ Refactor: Renaming `timesToSplit` to `maxParts` to clarify the parameter's purpose
+* ♻️ Refactor: Update references to `registry.hashicorp.io` to `registry.terraform.io`
+* ♻️ Refactor: Rename `timesToSplit` to `maxParts` to clarify the parameter's purpose
 in `limited_split` and `limited_rsplit`
 
 ## v0.2.0
