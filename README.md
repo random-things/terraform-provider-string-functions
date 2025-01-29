@@ -18,6 +18,7 @@
   * [Running an example](#running-an-example)
   * [Building for macOS (Apple Silicon)](#building-for-macos-apple-silicon)
   * [Building for Linux (x86_64)](#building-for-linux-x86_64)
+  * [Building for Windows (x86_64)](#building-for-windows-x86_64)
 
 # Functions
 
