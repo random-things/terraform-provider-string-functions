@@ -1,13 +1,17 @@
 # Contents
 
 * [Functions](#functions)
+  * [camel_case](#camel_case) 
   * [chunk_strings](#chunk_strings)
+  * [kebab_case](#kebab_case)
   * [limited_rsplit](#limited_rsplit)
   * [limited_split](#limited_split)
   * [multi_replace](#multi_replace)
+  * [pascal_case](#pascal_case)
   * [regex_escape](#regex_escape)
   * [shell_escape](#shell_escape)
   * [shell_escape_cmd](#shell_escape_cmd)
+  * [snake_case](#snake_case)
   * [strpos](#strpos)
   * [strrpos](#strrpos)
 * [Command line actions](#command-line-actions)
@@ -21,6 +25,26 @@
   * [Building for Windows (x86_64)](#building-for-windows-x86_64)
 
 # Functions
+
+## camel_case
+
+`camel_case(input string) string`
+
+Convert a string to camel case.
+
+Example:
+
+```hcl
+locals {
+  camel_cased = camel_case("hello_world")
+}
+
+output "camel_cased" {
+  value = local.camel_cased
+}
+
+# camel_cased = "helloWorld"
+```
 
 ## chunk_strings
 
@@ -41,6 +65,26 @@ output "chunked" {
 }
 
 # chunked = ["a,", "b,", "c,", "d,", "e"]
+```
+
+## kebab_case
+
+`kebab_case(input string) string`
+
+Convert a string to kebab case.
+
+Example:
+
+```hcl
+locals {
+  kebab_cased = kebab_case("helloWorld")
+}
+
+output "kebab_cased" {
+  value = local.kebab_cased
+}
+
+# kebab_cased = "hello-world"
 ```
 
 ## limited_rsplit
@@ -107,6 +151,26 @@ output "replaced" {
 # replaced = "z|b|c|d|e"
 ```
 
+## pascal_case
+
+`pascal_case(input string) string`
+
+Convert a string to Pascal case. Also known as Upper Camel Case.
+
+Example:
+
+```hcl
+locals {
+  pascal_cased = pascal_case("hello-world")
+}
+
+output "pascal_cased" {
+  value = local.pascal_cased
+}
+
+# pascal_cased = "HelloWorld"
+```
+
 ## regex_escape
 
 Escape a string containing regular expressions using Go's [`regexp.QuoteMeta`](https://pkg.go.dev/regexp#QuoteMeta).
@@ -166,6 +230,26 @@ output "escaped" {
 }
 
 # escaped = "echo 'hi there'"
+```
+
+## snake_case
+
+`snake_case(input string) string`
+
+Convert a string to snake case.
+
+Example:
+
+```hcl
+locals {
+  snake_cased = snake_case("HelloWorld")
+}
+
+output "snake_cased" {
+  value = local.snake_cased
+}
+
+# snake_cased = "hello_world"
 ```
 
 ## strpos

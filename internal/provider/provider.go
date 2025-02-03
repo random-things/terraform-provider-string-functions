@@ -39,13 +39,17 @@ func (*stringFunctionsProvider) DataSources(_ context.Context) []func() datasour
 }
 func (*stringFunctionsProvider) Functions(_ context.Context) []func() function.Function {
 	return []func() function.Function{
+		NewCamelCaseFunction,
 		NewChunkStringsFunction,
+		NewKebabCaseFunction,
 		NewLimitedSplitFunction,
 		NewLimitedRSplitFunction,
 		NewMultiReplaceFunction,
+		NewPascalCaseFunction,
 		NewRegExEscapeFunction,
 		NewShellEscapeFunction,
 		NewShellEscapeCmdFunction,
+		NewSnakeCaseFunction,
 		NewStrRPosFunction,
 		NewStrPosFunction,
 	}

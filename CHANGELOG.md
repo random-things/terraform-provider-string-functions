@@ -3,14 +3,23 @@
 Releases:
 
 * [Unreleased](#unreleased)
+* [v0.4.0](#v040)
 * [v0.3.0](#v030)
 * [v0.2.0](#v020)
 * [v0.1.0](#v010)
 
 ## Unreleased
 
+🚫 No unreleased changes
+
+## v0.4.0
+
 FEATURES:
 
+* ✨ Function: `camel_case`
+* ✨ Function: `kebab_case`
+* ✨ Function: `pascal_case`
+* ✨ Function: `snake_case`
 * ⬆️ Upgrade: terraform-plugin-go `0.25.0 -> 0.26.0`
 * ⬆️ Upgrade: actions/setup-go `5.2.0 -> 5.3.0`
 * ⬆️ Upgrade: golangci/golangci-lint-action `6.1.1 -> 6.2.0`
