@@ -1,19 +1,24 @@
 # Contents
 
 * [Functions](#functions)
-  * [camel_case](#camel_case) 
-  * [chunk_strings](#chunk_strings)
-  * [kebab_case](#kebab_case)
-  * [limited_rsplit](#limited_rsplit)
-  * [limited_split](#limited_split)
-  * [multi_replace](#multi_replace)
-  * [pascal_case](#pascal_case)
-  * [regex_escape](#regex_escape)
-  * [shell_escape](#shell_escape)
-  * [shell_escape_cmd](#shell_escape_cmd)
-  * [snake_case](#snake_case)
-  * [strpos](#strpos)
-  * [strrpos](#strrpos)
+  * [Case conversion](#case-conversion)
+    * [camel_case](#camel_case)
+    * [kebab_case](#kebab_case)
+    * [pascal_case](#pascal_case)
+    * [snake_case](#snake_case)
+  * [Escaping](#escaping)
+    * [regex_escape](#regex_escape)
+    * [shell_escape](#shell_escape)
+    * [shell_escape_cmd](#shell_escape_cmd)
+  * [Replacement](#replacement)
+    * [multi_replace](#multi_replace)
+  * [Splitting and chunking](#splitting-and-chunking)
+    * [chunk_strings](#chunk_strings)
+    * [limited_rsplit](#limited_rsplit)
+    * [limited_split](#limited_split)
+  * [Substring position](#substring-position)
+    * [strpos](#strpos)
+    * [strrpos](#strrpos)
 * [Command line actions](#command-line-actions)
   * [Generating documentation](#generating-documentation)
   * [Linting](#linting)
@@ -26,7 +31,9 @@
 
 # Functions
 
-## camel_case
+## Case conversion
+
+### camel_case
 
 `camel_case(input string) string`
 
@@ -46,28 +53,7 @@ output "camel_cased" {
 # camel_cased = "helloWorld"
 ```
 
-## chunk_strings
-
-`chunk_strings(inputs list of string, chunk_size number, delimiter string) list of string`
-
-Chunk a string into an array of smaller strings joined by a delimiter. Note that `chunk_size`
-represents the maximum character length of each chunk, not the number of items in the chunk.
-
-Example:
-
-```hcl
-locals {
-  chunked = chunk_strings(["a", "b", "c", "d", "e"], 2, ",")
-}
-
-output "chunked" {
-  value = local.chunked
-}
-
-# chunked = ["a,", "b,", "c,", "d,", "e"]
-```
-
-## kebab_case
+### kebab_case
 
 `kebab_case(input string) string`
 
@@ -87,47 +73,112 @@ output "kebab_cased" {
 # kebab_cased = "hello-world"
 ```
 
-## limited_rsplit
+### pascal_case
 
-Split a string from the right into a list of strings, limited by a number of resultant parts.
+`pascal_case(input string) string`
 
-`limited_rsplit(input string, delimiter string, limit number) list of string`
-
-Example:
-
-```hcl
-locals {
-  split = limited_rsplit("a,b,c,d,e", ",", 3)
-}
-
-output "split" {
-  value = local.split
-}
-
-# split = ["a,b,c", "d", "e"]
-```
-
-## limited_split
-
-Split a string into a list of strings, limited by a number of resultant parts.
-
-`limited_split(input string, delimiter string, limit number) list of string`
+Convert a string to Pascal case. Also known as Upper Camel Case.
 
 Example:
 
 ```hcl
 locals {
-  split = limited_split("a,b,c,d,e", ",", 3)
+  pascal_cased = pascal_case("hello-world")
 }
 
-output "split" {
-  value = local.split
+output "pascal_cased" {
+  value = local.pascal_cased
 }
 
-# split = ["a", "b", "c,d,e"]
+# pascal_cased = "HelloWorld"
 ```
 
-## multi_replace
+### snake_case
+
+`snake_case(input string) string`
+
+Convert a string to snake case.
+
+Example:
+
+```hcl
+locals {
+  snake_cased = snake_case("HelloWorld")
+}
+
+output "snake_cased" {
+  value = local.snake_cased
+}
+
+# snake_cased = "hello_world"
+```
+
+## Escaping
+
+### regex_escape
+
+Escape a string containing regular expressions using Go's [`regexp.QuoteMeta`](https://pkg.go.dev/regexp#QuoteMeta).
+
+`regex_escape(input string) string`
+
+Example:
+
+```hcl
+locals {
+  escaped = regex_escape("a.b.c")
+}
+
+output "escaped" {
+  value = local.escaped
+}
+
+# escaped = "a\.b\.c"
+# Without -raw, this looks like "a\\.b\\.c"
+```
+
+### shell_escape
+
+Escape a string containing shell metacharacters.
+
+`shell_escape(input string) string`
+
+Example:
+
+```hcl
+locals {
+  escaped = shell_escape("\"hi\"")
+}
+
+output "escaped" {
+  value = local.escaped
+}
+
+# escaped = "'\"hi\"'"
+```
+
+### shell_escape_cmd
+
+Escape a string containing shell metacharacters for use in a shell command.
+
+`shell_escape_cmd(input list of string) string`
+
+Example:
+
+```hcl
+locals {
+  escaped = shell_escape_cmd(["echo", "hi there"])
+}
+
+output "escaped" {
+  value = local.escaped
+}
+
+# escaped = "echo 'hi there'"
+```
+
+## Replacement
+
+### multi_replace
 
 Replace multiple substrings in a string with other substrings.
 
@@ -151,108 +202,73 @@ output "replaced" {
 # replaced = "z|b|c|d|e"
 ```
 
-## pascal_case
 
-`pascal_case(input string) string`
+## Splitting and chunking
 
-Convert a string to Pascal case. Also known as Upper Camel Case.
+### chunk_strings
 
-Example:
+`chunk_strings(inputs list of string, chunk_size number, delimiter string) list of string`
 
-```hcl
-locals {
-  pascal_cased = pascal_case("hello-world")
-}
-
-output "pascal_cased" {
-  value = local.pascal_cased
-}
-
-# pascal_cased = "HelloWorld"
-```
-
-## regex_escape
-
-Escape a string containing regular expressions using Go's [`regexp.QuoteMeta`](https://pkg.go.dev/regexp#QuoteMeta).
-
-`regex_escape(input string) string`
+Chunk a string into an array of smaller strings joined by a delimiter. Note that `chunk_size`
+represents the maximum character length of each chunk, not the number of items in the chunk.
 
 Example:
 
 ```hcl
 locals {
-  escaped = regex_escape("a.b.c")
+  chunked = chunk_strings(["a", "b", "c", "d", "e"], 2, ",")
 }
 
-output "escaped" {
-  value = local.escaped
+output "chunked" {
+  value = local.chunked
 }
 
-# escaped = "a\.b\.c"
-# Without -raw, this looks like "a\\.b\\.c"
+# chunked = ["a,", "b,", "c,", "d,", "e"]
 ```
 
-## shell_escape
+### limited_rsplit
 
-Escape a string containing shell metacharacters.
+Split a string from the right into a list of strings, limited by a number of resultant parts.
 
-`shell_escape(input string) string`
+`limited_rsplit(input string, delimiter string, limit number) list of string`
 
 Example:
 
 ```hcl
 locals {
-  escaped = shell_escape("\"hi\"")
+  split = limited_rsplit("a,b,c,d,e", ",", 3)
 }
 
-output "escaped" {
-  value = local.escaped
+output "split" {
+  value = local.split
 }
 
-# escaped = "'\"hi\"'"
+# split = ["a,b,c", "d", "e"]
 ```
 
-## shell_escape_cmd
+### limited_split
 
-Escape a string containing shell metacharacters for use in a shell command.
+Split a string into a list of strings, limited by a number of resultant parts.
 
-`shell_escape_cmd(input list of string) string`
+`limited_split(input string, delimiter string, limit number) list of string`
 
 Example:
 
 ```hcl
 locals {
-  escaped = shell_escape_cmd(["echo", "hi there"])
+  split = limited_split("a,b,c,d,e", ",", 3)
 }
 
-output "escaped" {
-  value = local.escaped
+output "split" {
+  value = local.split
 }
 
-# escaped = "echo 'hi there'"
+# split = ["a", "b", "c,d,e"]
 ```
 
-## snake_case
+## Substring position
 
-`snake_case(input string) string`
-
-Convert a string to snake case.
-
-Example:
-
-```hcl
-locals {
-  snake_cased = snake_case("HelloWorld")
-}
-
-output "snake_cased" {
-  value = local.snake_cased
-}
-
-# snake_cased = "hello_world"
-```
-
-## strpos
+### strpos
 
 Find the position of the first occurrence of a substring in a string.
 
@@ -272,7 +288,7 @@ output "position" {
 # position = 1
 ```
 
-## strrpos
+### strrpos
 
 Find the position of the last occurrence of a substring in a string.
 
