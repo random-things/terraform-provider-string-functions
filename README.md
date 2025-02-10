@@ -193,7 +193,7 @@ Example:
 ```hcl
 
 locals {
-  collapsed_end = collapse_end("a,b,c,d,e", "", 5)
+  collapsed_end = collapse_end("a,b,c,d,e", "", 6)
 }
 
 output "collapsed_end" {
