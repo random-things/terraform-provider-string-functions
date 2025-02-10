@@ -41,6 +41,9 @@ func (*stringFunctionsProvider) Functions(_ context.Context) []func() function.F
 	return []func() function.Function{
 		NewCamelCaseFunction,
 		NewChunkStringsFunction,
+		NewCollapseEndFunction,
+		NewCollapseMiddleFunction,
+		NewCollapseStartFunction,
 		NewKebabCaseFunction,
 		NewLimitedSplitFunction,
 		NewLimitedRSplitFunction,

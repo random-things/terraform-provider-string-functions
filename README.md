@@ -11,6 +11,9 @@
     * [shell_escape](#shell_escape)
     * [shell_escape_cmd](#shell_escape_cmd)
   * [Replacement](#replacement)
+    * [collapse_end](#collapse_end)
+    * [collapse_middle](#collapse_middle)
+    * [collapse_start](#collapse_start)
     * [multi_replace](#multi_replace)
   * [Splitting and chunking](#splitting-and-chunking)
     * [chunk_strings](#chunk_strings)
@@ -177,6 +180,72 @@ output "escaped" {
 ```
 
 ## Replacement
+
+### collapse_end
+
+Collapse the end of a string into a delimiter to return a string with a maximum
+length. An empty delimiter will be treated as a Unicode ellipsis.
+
+`collapse_end(input string, delimiter string, max_length int64) string`
+
+Example:
+
+```hcl
+
+locals {
+  collapsed_end = collapse_end("a,b,c,d,e", "", 5)
+}
+
+output "collapsed_end" {
+  value = local.collapsed_end
+}
+
+# collapsed_end = "a,b,c…"
+```
+
+### collapse_middle
+
+Collapse the middle of a string into a delimiter to return a string with a
+maximum length. An empty delimiter will be treated as a Unicode ellipsis.
+
+`collapse_middle(input string, delimiter string, max_length int64) string`
+
+Example:
+
+```hcl
+
+locals {
+  collapsed_middle = collapse_middle("a,b,c,d,e", "", 6)
+}
+
+output "collapsed_middle" {
+  value = local.collapsed_middle
+}
+
+# collapsed_middle = "a,b…,e"
+```
+
+### collapse_start
+
+Collapse the start of a string into a delimiter to return a string with a
+maximum length. An empty delimiter will be treated as a Unicode ellipsis.
+
+`collapse_start(input string, delimiter string, max_length int64) string`
+
+Example:
+
+```hcl
+
+locals {
+  collapsed_start = collapse_start("a,b,c,d,e", "...", 6)
+}
+
+output "collapsed_start" {
+  value = local.collapsed_start
+}
+
+# collapsed_start = "...d,e"
+```
 
 ### multi_replace
 
