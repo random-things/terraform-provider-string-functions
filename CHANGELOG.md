@@ -11,7 +11,7 @@ Releases:
 
 ## Unreleased
 
-🚫 No unreleased changes.
+* ⬆️ Upgrade: golangci/golangci-lint-action `6.3.0 -> 6.3.2`
 
 ## v0.5.0
 
