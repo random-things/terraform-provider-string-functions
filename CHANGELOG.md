@@ -3,6 +3,7 @@
 Releases:
 
 * [Unreleased](#unreleased)
+* [v0.5.0](#v050)
 * [v0.4.0](#v040)
 * [v0.3.0](#v030)
 * [v0.2.0](#v020)
@@ -10,6 +11,15 @@ Releases:
 
 ## Unreleased
 
+🚫 No unreleased changes.
+
+## v0.5.0
+
+* ✨ Function: `collapse_start`
+* ✨ Function: `collapse_middle`
+* ✨ Function: `collapse_end`
+* 🧪 Add Terraform v1.10 to the testing matrix
+* 🧹 Exclude docs, examples, and CHANGELOG.md from automatic testing
 * ⬆️ Upgrade: golangci/golangci-lint-action `6.2.0 -> 6.3.0`
 
 ## v0.4.0
