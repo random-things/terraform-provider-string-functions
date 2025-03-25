@@ -11,6 +11,8 @@ Releases:
 
 ## Unreleased
 
+* 🔧 Migrate: golangci-lint to v2
+* ⬆️ Upgrade: golangci/golangci-lint-action `6.5.2 -> 7.0.0`
 * ⬆️ Upgrade: hashicorp/terraform-plugin-testing `1.11.0 -> 1.12.0`
 * ⬆️ Upgrade: actions/setup-go `5.3.0 -> 5.4.0`
 * ⬆️ Upgrade: golangci/golangci-lint-action `6.5.1 -> 6.5.2`
