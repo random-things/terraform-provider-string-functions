@@ -11,6 +11,7 @@ Releases:
 
 ## Unreleased
 
+* ⬆️ Upgrade: golangci/golangci-lint-action `7.0.0 -> 8.0.0`
 * ⬆️ Upgrade: actions/setup-go `5.4.0 -> 5.5.0`
 * ⬆️ Upgrade: golang.org/x/text `0.23.0 -> 0.24.0`
 * ⬆️ Upgrade: goreleaser/goreleaser-action `6.2.1 -> 6.3.0`
