@@ -13,6 +13,7 @@ Releases:
 
 * 🧪 Add Terraform v1.12 to the testing matrix
 * 🧪 Add Terraform v1.11 to the testing matrix
+* ⬆️ Upgrade: hashicorp/terraform-plugin-testing `1.13.1 -> 1.13.2`
 * ⬆️ Upgrade: golang.org/x/text `0.25.0 -> 0.26.0`
 * ⬆️ Upgrade: hashicorp/terraform-plugin-framework `1.14.1 -> 1.15.0`
 * ⬆️ Upgrade: hashicorp/terraform-plugin-testing `1.12.0 -> 1.13.1`
