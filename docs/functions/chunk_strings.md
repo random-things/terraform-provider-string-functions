@@ -25,4 +25,3 @@ chunk_strings(inputs list of string, chunk_size number, delimiter string) list o
 1. `inputs` (List of String) The list of strings to chunk
 1. `chunk_size` (Number) The maximum size of each chunk
 1. `delimiter` (String) The delimiter to use when joining the strings
-

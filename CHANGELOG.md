@@ -11,6 +11,9 @@ Releases:
 
 ## Unreleased
 
+* 🔧 Configure: Go toolchain version to `1.23.11`
+* 🔧 Configure: Minimum Go build version to `1.23.7`
+* ⬆️ Upgrade: golang.org/x/text `0.26.0 -> 0.27.0`
 * 🧪 Add Terraform v1.12 to the testing matrix
 * 🧪 Add Terraform v1.11 to the testing matrix
 * ⬆️ Upgrade: hashicorp/terraform-plugin-testing `1.13.1 -> 1.13.2`

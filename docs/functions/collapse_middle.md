@@ -25,4 +25,3 @@ collapse_middle(input string, delimiter string, max_length number) string
 1. `input` (String) The string to collapse
 1. `delimiter` (String) The delimiter to collapse the string to.
 1. `max_length` (Number) The maximum length of the string after collapsing. If the string is longer than this, it will be truncated.
-
