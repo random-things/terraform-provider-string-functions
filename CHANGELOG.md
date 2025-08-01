@@ -11,6 +11,7 @@ Releases:
 
 ## Unreleased
 
+* ⬆️ Upgrade: hashicorp/terraform-plugin-framework `1.15.0 -> 1.15.1`
 * 🔧 Configure: Go toolchain version to `1.23.11`
 * 🔧 Configure: Minimum Go build version to `1.23.7`
 * ⬆️ Upgrade: golang.org/x/text `0.26.0 -> 0.27.0`
