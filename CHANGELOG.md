@@ -11,6 +11,7 @@ Releases:
 
 ## Unreleased
 
+* ⬆️ Upgrade: goreleaser/goreleaser-action `6.3.0 -> 6.4.0`
 * ⬆️ Upgrade: actions/checkout `4.2.2 -> 5.0.0`
 * ⬆️ Upgrade: golang.org/x/text `0.27.0 -> 0.28.0`
 * ⬆️ Upgrade: hashicorp/terraform-plugin-framework `1.15.0 -> 1.15.1`
