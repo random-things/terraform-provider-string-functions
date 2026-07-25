@@ -11,6 +11,9 @@ Releases:
 
 ## Unreleased
 
+* 🔧 Configure: Go toolchain version to `1.25.8`
+* ⬆️ Upgrade: hashicorp/go-version `1.8.0 -> 1.9.0`
+* ⬆️ Upgrade: golang.org/x/text `0.35.0 -> 0.36.0` 
 * ⬆️ Upgrade: hashicorp/setup-terraform `3.1.2 -> 4.0.1`
 * ⬆️ Upgrade: goreleaser/goreleaser-action `6.4.0 -> 7.2.3`
 * ⬆️ Upgrade: actions/setup-go `6.1.0 -> 7.0.0`
