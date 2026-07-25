@@ -11,6 +11,7 @@ Releases:
 
 ## Unreleased
 
+* ⬆️ Upgrade: crazy-max/ghaction-import-gpg `6.3.0 -> 7.0.0`
 * 🧪 Add Terraform v1.15 to the testing matrix
 * 🧪 Add Terraform v1.14 to the testing matrix
 * 🧪 Add Terraform v1.13 to the testing matrix
