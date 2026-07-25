@@ -11,6 +11,8 @@ Releases:
 
 ## Unreleased
 
+* ⬆️ Upgrade: actions/setup-go `6.1.0 -> 7.0.0`
+* ⬆️ Upgrade: actions/checkout `6.0.1 -> 7.0.1`
 * ⬆️ Upgrade: crazy-max/ghaction-import-gpg `6.3.0 -> 7.0.0`
 * 🧪 Add Terraform v1.15 to the testing matrix
 * 🧪 Add Terraform v1.14 to the testing matrix
