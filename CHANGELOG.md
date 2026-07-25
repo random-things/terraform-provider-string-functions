@@ -11,6 +11,8 @@ Releases:
 
 ## Unreleased
 
+* ⬆️ Upgrade: hashicorp/setup-terraform `3.1.2 -> 4.0.1`
+* ⬆️ Upgrade: goreleaser/goreleaser-action `6.4.0 -> 7.2.3`
 * ⬆️ Upgrade: actions/setup-go `6.1.0 -> 7.0.0`
 * ⬆️ Upgrade: actions/checkout `6.0.1 -> 7.0.1`
 * ⬆️ Upgrade: crazy-max/ghaction-import-gpg `6.3.0 -> 7.0.0`
