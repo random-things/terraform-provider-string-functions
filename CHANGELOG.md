@@ -3,6 +3,7 @@
 Releases:
 
 * [Unreleased](#unreleased)
+* [v0.5.1](#v051)
 * [v0.5.0](#v050)
 * [v0.4.0](#v040)
 * [v0.3.0](#v030)
@@ -10,6 +11,10 @@ Releases:
 * [v0.1.0](#v010)
 
 ## Unreleased
+
+* No changes pending release.
+
+## v0.5.1
 
 * 🔧 Configure: Go toolchain version to `1.25.8`
 * ⬆️ Upgrade: hashicorp/go-version `1.8.0 -> 1.9.0`
