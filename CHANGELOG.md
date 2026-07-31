@@ -12,7 +12,7 @@ Releases:
 
 ## Unreleased
 
-* No changes pending release.
+* ⬆️ Upgrade: golang.org/x/text `0.36.0 -> 0.40.0`
 
 ## v0.5.1
 
