@@ -12,6 +12,7 @@ Releases:
 
 ## Unreleased
 
+* ⬆️ Upgrade: hashicorp/terraform-plugin-log `0.10.0 -> 0.11.0` 
 * ⬆️ Upgrade: golangci/golangci-lint-action `9.2.0 -> 9.3.0`
 * ⬆️ Upgrade: hashicorp/terraform-plugin-testing `1.15.0 -> 1.16.0`
 * ⬆️ Upgrade: golang.org/x/text `0.36.0 -> 0.40.0`
