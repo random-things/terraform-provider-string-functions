@@ -1,30 +1,57 @@
 package provider
 
 import (
-	"github.com/hashicorp/go-version"
+	"strings"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/hashicorp/terraform-plugin-testing/knownvalue"
 	"github.com/hashicorp/terraform-plugin-testing/statecheck"
-	"github.com/hashicorp/terraform-plugin-testing/tfversion"
-	"testing"
 )
 
 func TestLimitedSplit(t *testing.T) {
-	input := "this is a test"
-	delimiter := " "
-	n := 2
+	tests := []struct {
+		name      string
+		input     string
+		delimiter string
+		n         int
+		expected  []string
+	}{
+		{
+			name:      "standard",
+			input:     "this is a test",
+			delimiter: " ",
+			n:         2,
+			expected:  []string{"this", "is a test"},
+		},
+		{
+			name:      "no limit",
+			input:     "a,b,c",
+			delimiter: ",",
+			n:         -1,
+			expected:  []string{"a", "b", "c"},
+		},
+	}
 
-	parts := limitedSplit(input, delimiter, n)
-	if len(parts) != 2 {
-		t.Errorf("expected 2 parts, got %d", len(parts))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			actual := limitedSplit(tt.input, tt.delimiter, tt.n)
+			expected := strings.SplitN(tt.input, tt.delimiter, tt.n)
+			if len(actual) != len(expected) {
+				t.Fatalf("expected %d parts, got %d", len(expected), len(actual))
+			}
+			for i := range actual {
+				if actual[i] != expected[i] {
+					t.Errorf("part %d: expected %q, got %q", i, expected[i], actual[i])
+				}
+			}
+		})
 	}
 }
 
 func TestAccLimitedSplit_Known(t *testing.T) {
 	resource.UnitTest(t, resource.TestCase{
-		TerraformVersionChecks: []tfversion.TerraformVersionCheck{
-			tfversion.SkipBelow(version.Must(version.NewVersion("1.8.0"))),
-		},
+		TerraformVersionChecks:   terraform18OrNewer,
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{

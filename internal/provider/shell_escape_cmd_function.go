@@ -15,11 +15,11 @@ func NewShellEscapeCmdFunction() function.Function {
 	return &ShellEscapeCmdFunction{}
 }
 
-func (f *ShellEscapeCmdFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
+func (*ShellEscapeCmdFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
 	resp.Name = "shell_escape_cmd"
 }
 
-func (f *ShellEscapeCmdFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
+func (*ShellEscapeCmdFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:     "Escape a shell command provided as a list of strings",
 		Description: "Escapes a list of strings containing a shell command and its arguments.",
@@ -34,10 +34,13 @@ func (f *ShellEscapeCmdFunction) Definition(ctx context.Context, req function.De
 	}
 }
 
-func (f *ShellEscapeCmdFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
+func (*ShellEscapeCmdFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	var input []string
 
 	resp.Error = function.ConcatFuncErrors(req.Arguments.Get(ctx, &input))
+	if resp.Error != nil {
+		return
+	}
 
 	output := shellEscapeCmd(input)
 

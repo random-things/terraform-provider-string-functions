@@ -23,15 +23,15 @@ func NewSnakeCaseFunction() function.Function {
 	return &SnakeCaseFunction{}
 }
 
-func (f *KebabCaseFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
+func (*KebabCaseFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
 	resp.Name = "kebab_case"
 }
 
-func (f *SnakeCaseFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
+func (*SnakeCaseFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
 	resp.Name = "snake_case"
 }
 
-func (f *KebabCaseFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
+func (*KebabCaseFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:     "Kebab case a string",
 		Description: "Kebab case a string",
@@ -45,7 +45,7 @@ func (f *KebabCaseFunction) Definition(ctx context.Context, req function.Definit
 	}
 }
 
-func (f *SnakeCaseFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
+func (*SnakeCaseFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:     "Snake case a string",
 		Description: "Snake case a string",
@@ -59,20 +59,26 @@ func (f *SnakeCaseFunction) Definition(ctx context.Context, req function.Definit
 	}
 }
 
-func (f *KebabCaseFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
+func (*KebabCaseFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	var input string
 
 	resp.Error = function.ConcatFuncErrors(req.Arguments.Get(ctx, &input))
+	if resp.Error != nil {
+		return
+	}
 
 	output := toKebabCase(input)
 
 	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, output))
 }
 
-func (f *SnakeCaseFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
+func (*SnakeCaseFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	var input string
 
 	resp.Error = function.ConcatFuncErrors(req.Arguments.Get(ctx, &input))
+	if resp.Error != nil {
+		return
+	}
 
 	output := toSnakeCase(input)
 

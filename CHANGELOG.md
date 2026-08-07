@@ -12,6 +12,19 @@ Releases:
 
 ## Unreleased
 
+* 🐛 Fix: `chunk_strings` handles input string > `chunk_size`
+* 🐛 Fix: `chunk_strings` handles multi-byte delimiter
+* 🧪 Test: More comprehensive `chunk_strings` tests, table of cases
+* 🐛 Fix: Collapse functions check for more errors
+* 🐛 Fix: Collapse functions now truncate when delimiter length > maximum length
+* 🐛 Fix: `limited_split` and `limited_rsplit` correctly handle multi-byte delimiters
+* 🧪 Test: `limited_split` and `limited_rsplit` now have more comprehensive tests
+* 🐛 Fix: Casing functions return early if an error occurs when getting input arguments
+* 🐛 Fix: `regex_escape` returns early if an error occurs when getting input arguments
+* 🐛 Fix: `shell_escape_cmd` returns early if an error occurs when getting input arguments
+* 🐛 Fix: `shell_escape` returns early if an error occurs when getting input arguments
+* 🧪 Test: Terraform version checks in individual test files replaced with a common reference
+* ⚠️ Deprecate: `multi_replace` and add `multi_replace_sorted` and `multi_replace_sequential` to address non-deterministic replacement order
 * ⬆️ Upgrade: hashicorp/terraform-plugin-log `0.10.0 -> 0.11.0` 
 * ⬆️ Upgrade: golangci/golangci-lint-action `9.2.0 -> 9.3.0`
 * ⬆️ Upgrade: hashicorp/terraform-plugin-testing `1.15.0 -> 1.16.0`

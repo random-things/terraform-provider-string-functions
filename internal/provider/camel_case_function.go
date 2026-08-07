@@ -25,15 +25,15 @@ func NewPascalCaseFunction() function.Function {
 	return &PascalCaseFunction{}
 }
 
-func (f *CamelCaseFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
+func (*CamelCaseFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
 	resp.Name = "camel_case"
 }
 
-func (f *PascalCaseFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
+func (*PascalCaseFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
 	resp.Name = "pascal_case"
 }
 
-func (f *CamelCaseFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
+func (*CamelCaseFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:     "Camel case a string",
 		Description: "Camel case a string",
@@ -47,7 +47,7 @@ func (f *CamelCaseFunction) Definition(ctx context.Context, req function.Definit
 	}
 }
 
-func (f *PascalCaseFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
+func (*PascalCaseFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:     "Pascal case a string",
 		Description: "Pascal case a string",
@@ -61,20 +61,26 @@ func (f *PascalCaseFunction) Definition(ctx context.Context, req function.Defini
 	}
 }
 
-func (f *CamelCaseFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
+func (*CamelCaseFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	var input string
 
 	resp.Error = function.ConcatFuncErrors(req.Arguments.Get(ctx, &input))
+	if resp.Error != nil {
+		return
+	}
 
 	output := toCamelCase(input)
 
 	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, output))
 }
 
-func (f *PascalCaseFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
+func (*PascalCaseFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	var input string
 
 	resp.Error = function.ConcatFuncErrors(req.Arguments.Get(ctx, &input))
+	if resp.Error != nil {
+		return
+	}
 
 	output := toPascalCase(input)
 

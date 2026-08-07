@@ -16,11 +16,11 @@ func NewLimitedRSplitFunction() function.Function {
 	return &LimitedRSplitFunction{}
 }
 
-func (f *LimitedRSplitFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
+func (*LimitedRSplitFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
 	resp.Name = "limited_rsplit"
 }
 
-func (f *LimitedRSplitFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
+func (*LimitedRSplitFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:     "Splits a string from the end using a delimiter a specified number of times",
 		Description: "Splits a string from the end using a delimiter a specified number of times. The result is an array of strings.",
@@ -44,21 +44,25 @@ func (f *LimitedRSplitFunction) Definition(ctx context.Context, req function.Def
 	}
 }
 
-func (f *LimitedRSplitFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
+func (*LimitedRSplitFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	var input string
 	var delimiter string
-	var maxParts int
+	var maxParts int64
 
 	resp.Error = function.ConcatFuncErrors(req.Arguments.Get(ctx, &input, &delimiter, &maxParts))
+	if resp.Error != nil {
+		return
+	}
 
-	splitStrings := limitedRSplit(input, delimiter, maxParts)
+	splitStrings := limitedRSplit(input, delimiter, int(maxParts))
 
 	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, splitStrings))
 }
 
 func limitedRSplit(input string, delimiter string, maxParts int) []string {
 	reversedInput := reverseString(input)
-	splitStrings := strings.SplitN(reversedInput, delimiter, maxParts)
+	reversedDelimiter := reverseString(delimiter)
+	splitStrings := strings.SplitN(reversedInput, reversedDelimiter, maxParts)
 
 	for i, splitString := range splitStrings {
 		splitStrings[i] = reverseString(splitString)

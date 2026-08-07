@@ -1,55 +1,59 @@
 package provider
 
 import (
-	"github.com/hashicorp/go-version"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/hashicorp/terraform-plugin-testing/knownvalue"
 	"github.com/hashicorp/terraform-plugin-testing/statecheck"
-	"github.com/hashicorp/terraform-plugin-testing/tfversion"
-	"testing"
 )
 
-func TestShellEscape_Empty(t *testing.T) {
-	input := ``
-
-	output := shellEscape(input)
-	if output != `''` {
-		t.Errorf(`expected escaped string is "''", got %s`, output)
+func TestShellEscape(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    string
+		expected string
+	}{
+		{
+			name:     "empty",
+			input:    "",
+			expected: "''",
+		},
+		{
+			name:     "double quotes",
+			input:    `"test string"`,
+			expected: `'"test string"'`,
+		},
+		{
+			name:     "single quotes",
+			input:    `'test string'`,
+			expected: `''"'"'test string'"'"''`,
+		},
+		{
+			name:     "no quotes",
+			input:    `test string`,
+			expected: `'test string'`,
+		},
+		{
+			name:     "safe characters",
+			input:    `abc/def.ghi`,
+			expected: `abc/def.ghi`,
+		},
 	}
-}
 
-func TestShellEscape_DoubleQuotes(t *testing.T) {
-	input := `"test string"`
-
-	output := shellEscape(input)
-	if output != `'"test string"'` {
-		t.Errorf(`expected escaped string is '"test string"', got %s`, output)
-	}
-}
-
-func TestShellEscape_SingleQuotes(t *testing.T) {
-	input := `'test string'`
-
-	output := shellEscape(input)
-	if output != `''"'"'test string'"'"''` {
-		t.Errorf(`expected escaped string is ''"'"'test string'"'"'', got %s`, output)
-	}
-}
-
-func TestShellEscape_NoQuotes(t *testing.T) {
-	input := `test string`
-
-	output := shellEscape(input)
-	if output != `'test string'` {
-		t.Errorf(`expected escaped string is "'test string'", got %s`, output)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			actual := shellEscape(tt.input)
+			if actual != tt.expected {
+				t.Errorf("expected %q, got %q", tt.expected, actual)
+			}
+		})
 	}
 }
 
 func TestAccShellEscape_Empty(t *testing.T) {
 	resource.UnitTest(t, resource.TestCase{
-		TerraformVersionChecks: []tfversion.TerraformVersionCheck{
-			tfversion.SkipBelow(version.Must(version.NewVersion("1.8.0"))),
-		},
+		TerraformVersionChecks:   terraform18OrNewer,
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
@@ -71,9 +75,7 @@ func TestAccShellEscape_Empty(t *testing.T) {
 
 func TestAccShellEscape_DoubleQuotes(t *testing.T) {
 	resource.UnitTest(t, resource.TestCase{
-		TerraformVersionChecks: []tfversion.TerraformVersionCheck{
-			tfversion.SkipBelow(version.Must(version.NewVersion("1.8.0"))),
-		},
+		TerraformVersionChecks:   terraform18OrNewer,
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
@@ -95,9 +97,7 @@ func TestAccShellEscape_DoubleQuotes(t *testing.T) {
 
 func TestAccShellEscape_SingleQuotes(t *testing.T) {
 	resource.UnitTest(t, resource.TestCase{
-		TerraformVersionChecks: []tfversion.TerraformVersionCheck{
-			tfversion.SkipBelow(version.Must(version.NewVersion("1.8.0"))),
-		},
+		TerraformVersionChecks:   terraform18OrNewer,
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
@@ -119,9 +119,7 @@ func TestAccShellEscape_SingleQuotes(t *testing.T) {
 
 func TestAccShellEscape_NoQuotes(t *testing.T) {
 	resource.UnitTest(t, resource.TestCase{
-		TerraformVersionChecks: []tfversion.TerraformVersionCheck{
-			tfversion.SkipBelow(version.Must(version.NewVersion("1.8.0"))),
-		},
+		TerraformVersionChecks:   terraform18OrNewer,
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{

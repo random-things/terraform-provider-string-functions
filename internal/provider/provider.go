@@ -2,12 +2,12 @@ package provider
 
 import (
 	"context"
+
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/function"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
-	"github.com/hashicorp/terraform-plugin-log/tflog"
 )
 
 var _ provider.ProviderWithFunctions = &stringFunctionsProvider{}
@@ -23,7 +23,6 @@ type stringFunctionsProvider struct {
 }
 
 func (p *stringFunctionsProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
-	tflog.Info(ctx, "Loading string-functions metadata...")
 	resp.TypeName = "string-functions"
 	resp.Version = p.version
 }
@@ -45,16 +44,18 @@ func (*stringFunctionsProvider) Functions(_ context.Context) []func() function.F
 		NewCollapseMiddleFunction,
 		NewCollapseStartFunction,
 		NewKebabCaseFunction,
-		NewLimitedSplitFunction,
 		NewLimitedRSplitFunction,
+		NewLimitedSplitFunction,
 		NewMultiReplaceFunction,
+		NewMultiReplaceSequentialFunction,
+		NewMultiReplaceSortedFunction,
 		NewPascalCaseFunction,
 		NewRegExEscapeFunction,
-		NewShellEscapeFunction,
 		NewShellEscapeCmdFunction,
+		NewShellEscapeFunction,
 		NewSnakeCaseFunction,
-		NewStrRPosFunction,
 		NewStrPosFunction,
+		NewStrRPosFunction,
 	}
 }
 func (p *stringFunctionsProvider) Resources(_ context.Context) []func() resource.Resource {

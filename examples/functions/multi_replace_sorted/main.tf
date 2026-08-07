@@ -17,7 +17,6 @@ locals {
   }
 }
 
-# Deprecated: Use multi_replace_sorted or multi_replace_sequential instead.
 output "output_string" {
-  value = provider::string-functions::multi_replace(local.input_string, local.replacements)
+  value = provider::string-functions::multi_replace_sorted(local.input_string, local.replacements)
 }

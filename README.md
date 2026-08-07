@@ -14,7 +14,9 @@
     * [collapse_end](#collapse_end)
     * [collapse_middle](#collapse_middle)
     * [collapse_start](#collapse_start)
-    * [multi_replace](#multi_replace)
+    * [multi_replace](#multi_replace) (deprecated)
+    * [multi_replace_sequential](#multi_replace_sequential)
+    * [multi_replace_sorted](#multi_replace_sorted)
   * [Splitting and chunking](#splitting-and-chunking)
     * [chunk_strings](#chunk_strings)
     * [limited_rsplit](#limited_rsplit)
@@ -249,6 +251,10 @@ output "collapsed_start" {
 
 ### multi_replace
 
+> [!WARNING]
+> This function is deprecated. Use `multi_replace_sorted` or `multi_replace_sequential` instead.
+> The replacement order in this function is non-deterministic.
+
 Replace multiple substrings in a string with other substrings.
 
 `multi_replace(input string, replacements map of string to string) string`
@@ -259,6 +265,53 @@ Example:
 
 locals {
   replaced = multi_replace("a,b,c,d,e", {
+    "," = "|",
+    "a" = "z",
+  })
+}
+
+output "replaced" {
+  value = local.replaced
+}
+
+# replaced = "z|b|c|d|e"
+```
+
+### multi_replace_sequential
+
+Replace multiple substrings in a string sequentially, preserving the order of the list.
+This is useful for nested replacements.
+
+`multi_replace_sequential(input string, replacements list of object) string`
+
+Example:
+
+```hcl
+locals {
+  replaced = multi_replace_sequential("FOO", [
+    { from = "FOO", to = "BAR" },
+    { from = "BAR", to = "BAZ" },
+  ])
+}
+
+output "replaced" {
+  value = local.replaced
+}
+
+# replaced = "BAZ"
+```
+
+### multi_replace_sorted
+
+Replace multiple substrings in a string. Keys are sorted lexically before replacement to ensure deterministic behavior.
+
+`multi_replace_sorted(input string, replacements map of string to string) string`
+
+Example:
+
+```hcl
+locals {
+  replaced = multi_replace_sorted("a,b,c,d,e", {
     "," = "|",
     "a" = "z",
   })
