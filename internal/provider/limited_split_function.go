@@ -15,11 +15,11 @@ func NewLimitedSplitFunction() function.Function {
 	return &LimitedSplitFunction{}
 }
 
-func (f *LimitedSplitFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
+func (*LimitedSplitFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
 	resp.Name = "limited_split"
 }
 
-func (f *LimitedSplitFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
+func (*LimitedSplitFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:     "Splits a string using a delimiter a specified number of times",
 		Description: "Splits a string using a delimiter a specified number of times. The result is an array of strings.",
@@ -43,14 +43,17 @@ func (f *LimitedSplitFunction) Definition(ctx context.Context, req function.Defi
 	}
 }
 
-func (f *LimitedSplitFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
+func (*LimitedSplitFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	var input string
 	var delimiter string
-	var maxParts int
+	var maxParts int64
 
 	resp.Error = function.ConcatFuncErrors(req.Arguments.Get(ctx, &input, &delimiter, &maxParts))
+	if resp.Error != nil {
+		return
+	}
 
-	splitStrings := limitedSplit(input, delimiter, maxParts)
+	splitStrings := limitedSplit(input, delimiter, int(maxParts))
 
 	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, splitStrings))
 }

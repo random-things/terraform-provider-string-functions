@@ -14,11 +14,11 @@ func NewRegExEscapeFunction() function.Function {
 	return &RegExEscapeFunction{}
 }
 
-func (f *RegExEscapeFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
+func (*RegExEscapeFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
 	resp.Name = "regex_escape"
 }
 
-func (f *RegExEscapeFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
+func (*RegExEscapeFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:     "Escape a regular expression-containing string",
 		Description: "Escapes a string containing regular expressions.",
@@ -32,10 +32,13 @@ func (f *RegExEscapeFunction) Definition(ctx context.Context, req function.Defin
 	}
 }
 
-func (f *RegExEscapeFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
+func (*RegExEscapeFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	var input string
 
 	resp.Error = function.ConcatFuncErrors(req.Arguments.Get(ctx, &input))
+	if resp.Error != nil {
+		return
+	}
 
 	output := regExEscape(input)
 

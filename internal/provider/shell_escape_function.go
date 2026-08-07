@@ -15,11 +15,11 @@ func NewShellEscapeFunction() function.Function {
 	return &ShellEscapeFunction{}
 }
 
-func (f *ShellEscapeFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
+func (*ShellEscapeFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
 	resp.Name = "shell_escape"
 }
 
-func (f *ShellEscapeFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
+func (*ShellEscapeFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:     "Escape a shell metacharacter-containing string",
 		Description: "Escapes a string containing shell metacharacters.",
@@ -33,10 +33,13 @@ func (f *ShellEscapeFunction) Definition(ctx context.Context, req function.Defin
 	}
 }
 
-func (f *ShellEscapeFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
+func (*ShellEscapeFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	var input string
 
 	resp.Error = function.ConcatFuncErrors(req.Arguments.Get(ctx, &input))
+	if resp.Error != nil {
+		return
+	}
 
 	output := shellEscape(input)
 

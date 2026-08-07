@@ -1,11 +1,9 @@
 package provider
 
 import (
-	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/hashicorp/terraform-plugin-testing/knownvalue"
 	"github.com/hashicorp/terraform-plugin-testing/statecheck"
-	"github.com/hashicorp/terraform-plugin-testing/tfversion"
 	"testing"
 )
 
@@ -77,9 +75,7 @@ func TestPascalCase(t *testing.T) {
 
 func TestAccCamelCase(t *testing.T) {
 	resource.UnitTest(t, resource.TestCase{
-		TerraformVersionChecks: []tfversion.TerraformVersionCheck{
-			tfversion.SkipBelow(version.Must(version.NewVersion("1.8.0"))),
-		},
+		TerraformVersionChecks:   terraform18OrNewer,
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
@@ -101,9 +97,7 @@ func TestAccCamelCase(t *testing.T) {
 
 func TestAccPascalCase(t *testing.T) {
 	resource.UnitTest(t, resource.TestCase{
-		TerraformVersionChecks: []tfversion.TerraformVersionCheck{
-			tfversion.SkipBelow(version.Must(version.NewVersion("1.8.0"))),
-		},
+		TerraformVersionChecks:   terraform18OrNewer,
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{

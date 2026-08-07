@@ -1,28 +1,44 @@
 package provider
 
 import (
-	"github.com/hashicorp/go-version"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/hashicorp/terraform-plugin-testing/knownvalue"
 	"github.com/hashicorp/terraform-plugin-testing/statecheck"
-	"github.com/hashicorp/terraform-plugin-testing/tfversion"
-	"testing"
 )
 
-func TestShellEscapeCmd_Known(t *testing.T) {
-	input := []string{"echo", "this is a test"}
+func TestShellEscapeCmd(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    []string
+		expected string
+	}{
+		{
+			name:     "standard",
+			input:    []string{"echo", "this is a test"},
+			expected: `echo 'this is a test'`,
+		},
+		{
+			name:     "multiple args",
+			input:    []string{"ls", "-l", "/tmp"},
+			expected: `ls -l /tmp`,
+		},
+	}
 
-	output := shellEscapeCmd(input)
-	if output != `echo 'this is a test'` {
-		t.Errorf(`expected escaped string is "echo 'this is a test'", got %s`, output)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			actual := shellEscapeCmd(tt.input)
+			if actual != tt.expected {
+				t.Errorf("expected %q, got %q", tt.expected, actual)
+			}
+		})
 	}
 }
 
 func TestAccShellEscapeCmd_Known(t *testing.T) {
 	resource.UnitTest(t, resource.TestCase{
-		TerraformVersionChecks: []tfversion.TerraformVersionCheck{
-			tfversion.SkipBelow(version.Must(version.NewVersion("1.8.0"))),
-		},
+		TerraformVersionChecks:   terraform18OrNewer,
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{

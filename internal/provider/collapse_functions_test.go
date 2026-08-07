@@ -1,12 +1,11 @@
 package provider
 
 import (
-	"github.com/hashicorp/go-version"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/hashicorp/terraform-plugin-testing/knownvalue"
 	"github.com/hashicorp/terraform-plugin-testing/statecheck"
-	"github.com/hashicorp/terraform-plugin-testing/tfversion"
-	"testing"
 )
 
 type FuncArgs struct {
@@ -122,9 +121,7 @@ func TestCollapseEnd(t *testing.T) {
 
 func TestAccCollapseStart(t *testing.T) {
 	resource.UnitTest(t, resource.TestCase{
-		TerraformVersionChecks: []tfversion.TerraformVersionCheck{
-			tfversion.SkipBelow(version.Must(version.NewVersion("1.8.0"))),
-		},
+		TerraformVersionChecks:   terraform18OrNewer,
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
@@ -146,9 +143,7 @@ func TestAccCollapseStart(t *testing.T) {
 
 func TestAccCollapseMiddle(t *testing.T) {
 	resource.UnitTest(t, resource.TestCase{
-		TerraformVersionChecks: []tfversion.TerraformVersionCheck{
-			tfversion.SkipBelow(version.Must(version.NewVersion("1.8.0"))),
-		},
+		TerraformVersionChecks:   terraform18OrNewer,
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{
@@ -170,9 +165,7 @@ func TestAccCollapseMiddle(t *testing.T) {
 
 func TestAccCollapseEnd(t *testing.T) {
 	resource.UnitTest(t, resource.TestCase{
-		TerraformVersionChecks: []tfversion.TerraformVersionCheck{
-			tfversion.SkipBelow(version.Must(version.NewVersion("1.8.0"))),
-		},
+		TerraformVersionChecks:   terraform18OrNewer,
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{

@@ -34,19 +34,19 @@ func NewCollapseEndFunction() function.Function {
 	return &CollapseEndFunction{}
 }
 
-func (f *CollapseStartFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
+func (*CollapseStartFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
 	resp.Name = "collapse_start"
 }
 
-func (f *CollapseMiddleFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
+func (*CollapseMiddleFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
 	resp.Name = "collapse_middle"
 }
 
-func (f *CollapseEndFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
+func (*CollapseEndFunction) Metadata(ctx context.Context, req function.MetadataRequest, resp *function.MetadataResponse) {
 	resp.Name = "collapse_end"
 }
 
-func (f *CollapseStartFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
+func (*CollapseStartFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:     "Collapse the start of a string",
 		Description: "Collapse the start of a string to a specified delimiter",
@@ -68,7 +68,7 @@ func (f *CollapseStartFunction) Definition(ctx context.Context, req function.Def
 	}
 }
 
-func (f *CollapseMiddleFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
+func (*CollapseMiddleFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:     "Collapse the middle of a string",
 		Description: "Collapse the middle of a string to a specified delimiter",
@@ -90,7 +90,7 @@ func (f *CollapseMiddleFunction) Definition(ctx context.Context, req function.De
 	}
 }
 
-func (f *CollapseEndFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
+func (*CollapseEndFunction) Definition(ctx context.Context, req function.DefinitionRequest, resp *function.DefinitionResponse) {
 	resp.Definition = function.Definition{
 		Summary:     "Collapse the end of a string",
 		Description: "Collapse the end of a string to a specified delimiter",
@@ -112,36 +112,45 @@ func (f *CollapseEndFunction) Definition(ctx context.Context, req function.Defin
 	}
 }
 
-func (f *CollapseStartFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
+func (*CollapseStartFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	var input string
 	var delimiter string
 	var maxLength int64
 
 	resp.Error = function.ConcatFuncErrors(req.Arguments.Get(ctx, &input, &delimiter, &maxLength))
+	if resp.Error != nil {
+		return
+	}
 
 	output, _ := collapseString(input, delimiter, maxLength, Start)
 
 	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, output))
 }
 
-func (f *CollapseMiddleFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
+func (*CollapseMiddleFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	var input string
 	var delimiter string
 	var maxLength int64
 
 	resp.Error = function.ConcatFuncErrors(req.Arguments.Get(ctx, &input, &delimiter, &maxLength))
+	if resp.Error != nil {
+		return
+	}
 
 	output, _ := collapseString(input, delimiter, maxLength, Middle)
 
 	resp.Error = function.ConcatFuncErrors(resp.Error, resp.Result.Set(ctx, output))
 }
 
-func (f *CollapseEndFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
+func (*CollapseEndFunction) Run(ctx context.Context, req function.RunRequest, resp *function.RunResponse) {
 	var input string
 	var delimiter string
 	var maxLength int64
 
 	resp.Error = function.ConcatFuncErrors(req.Arguments.Get(ctx, &input, &delimiter, &maxLength))
+	if resp.Error != nil {
+		return
+	}
 
 	output, _ := collapseString(input, delimiter, maxLength, End)
 
@@ -171,7 +180,7 @@ func collapseString(input string, delimiter string, maxLength int64, location St
 	case Start:
 		nRunes := maxLength - delimiterLength
 		if nRunes < 0 {
-			return delimiter[:maxLength], nil
+			return truncateRunes(delimiter, maxLength), nil
 		}
 		return delimiter + string(runes[runesLength-nRunes:]), nil
 	case Middle:
@@ -186,16 +195,25 @@ func collapseString(input string, delimiter string, maxLength int64, location St
 		}
 
 		if nFrontRunes == 0 && nBackRunes == 0 {
-			return delimiter[:maxLength], nil
+			return truncateRunes(delimiter, maxLength), nil
 		}
 		return string(runes[:nFrontRunes]) + delimiter + string(runes[runesLength-nBackRunes:]), nil
 	case End:
 		nRunes := maxLength - delimiterLength
 		if nRunes < 0 {
-			return delimiter[:maxLength], nil
+			return truncateRunes(delimiter, maxLength), nil
 		}
 		return string(runes[:nRunes]) + delimiter, nil
 	}
 
 	return "", function.NewFuncError("Invalid location")
+}
+
+func truncateRunes(input string, maxLength int64) string {
+	runes := []rune(input)
+	if int64(len(runes)) <= maxLength {
+		return input
+	}
+
+	return string(runes[:maxLength])
 }

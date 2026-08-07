@@ -1,40 +1,58 @@
 package provider
 
 import (
-	"github.com/hashicorp/go-version"
+	"strings"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/hashicorp/terraform-plugin-testing/knownvalue"
 	"github.com/hashicorp/terraform-plugin-testing/statecheck"
-	"github.com/hashicorp/terraform-plugin-testing/tfversion"
-	"strings"
-	"testing"
 )
 
-func TestRStrPosFound(t *testing.T) {
-	input := "abcdefghijklmnopqrstuvwxyzdef"
-	substring := "def"
-
-	pos := strRPos(input, substring)
-	if pos != strings.LastIndex(input, substring) {
-		t.Errorf("Expected %d, got %d", strings.Index(input, substring), pos)
+func TestStrRPos(t *testing.T) {
+	tests := []struct {
+		name      string
+		input     string
+		substring string
+		expected  int
+	}{
+		{
+			name:      "found",
+			input:     "abcdefghijklmnopqrstuvwxyzdef",
+			substring: "def",
+			expected:  26,
+		},
+		{
+			name:      "last occurrence",
+			input:     "abcdabcd",
+			substring: "abcd",
+			expected:  4,
+		},
+		{
+			name:      "not found",
+			input:     "abcdefghijklmnopqrstuvwxyz",
+			substring: "yz1",
+			expected:  -1,
+		},
 	}
-}
 
-func TestRStrPosNotFound(t *testing.T) {
-	input := "abcdefghijklmnopqrstuvwxyz"
-	substring := "yz1"
-
-	pos := strRPos(input, substring)
-	if pos != strings.LastIndex(input, substring) {
-		t.Errorf("Expected %d, got %d", strings.Index(input, substring), pos)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			actual := strRPos(tt.input, tt.substring)
+			expected := strings.LastIndex(tt.input, tt.substring)
+			if actual != expected {
+				t.Fatalf("expected %d, got %d", expected, actual)
+			}
+			if actual != tt.expected {
+				t.Errorf("expected %d, got %d", tt.expected, actual)
+			}
+		})
 	}
 }
 
 func TestAccStrRPos_Known(t *testing.T) {
 	resource.UnitTest(t, resource.TestCase{
-		TerraformVersionChecks: []tfversion.TerraformVersionCheck{
-			tfversion.SkipBelow(version.Must(version.NewVersion("1.8.0"))),
-		},
+		TerraformVersionChecks:   terraform18OrNewer,
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{

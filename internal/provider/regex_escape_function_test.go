@@ -1,28 +1,44 @@
 package provider
 
 import (
-	"github.com/hashicorp/go-version"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/hashicorp/terraform-plugin-testing/knownvalue"
 	"github.com/hashicorp/terraform-plugin-testing/statecheck"
-	"github.com/hashicorp/terraform-plugin-testing/tfversion"
-	"testing"
 )
 
 func TestRegExEscape(t *testing.T) {
-	input := `\this is a test.`
+	tests := []struct {
+		name     string
+		input    string
+		expected string
+	}{
+		{
+			name:     "standard",
+			input:    `\this is a test.`,
+			expected: `\\this is a test\.`,
+		},
+		{
+			name:     "special chars",
+			input:    `^$.*+?()[]{}|`,
+			expected: `\^\$\.\*\+\?\(\)\[\]\{\}\|`,
+		},
+	}
 
-	output := regExEscape(input)
-	if output != `\\this is a test\.` {
-		t.Errorf(`expected escaped string is '\\this is a test\.', got %s`, output)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			actual := regExEscape(tt.input)
+			if actual != tt.expected {
+				t.Errorf("expected %q, got %q", tt.expected, actual)
+			}
+		})
 	}
 }
 
 func TestAccRegExEscape_Known(t *testing.T) {
 	resource.UnitTest(t, resource.TestCase{
-		TerraformVersionChecks: []tfversion.TerraformVersionCheck{
-			tfversion.SkipBelow(version.Must(version.NewVersion("1.8.0"))),
-		},
+		TerraformVersionChecks:   terraform18OrNewer,
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			{

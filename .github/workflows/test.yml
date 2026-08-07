@@ -10,6 +10,14 @@ on:
       - 'examples/**'
       - 'CHANGELOG.md'
       - 'README.md'
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'docs/**'
+      - 'examples/**'
+      - 'CHANGELOG.md'
+      - 'README.md'
 
 # Testing only needs permissions to read the repository contents.
 permissions:
@@ -32,7 +40,7 @@ jobs:
       - name: Run linters
         uses: golangci/golangci-lint-action@ba0d7d2ec06a0ea1cb5fa41b2e4a3ab91d21278a # v9.3.0
         with:
-          version: latest
+          version: v1.64
 
   generate:
     runs-on: ubuntu-latest
@@ -46,11 +54,12 @@ jobs:
         with:
           terraform_version: '1.15.8'
           terraform_wrapper: false
-      - run: go generate ./...
+      - run: terraform fmt -recursive ./examples/
+      - run: go tool tfplugindocs generate -provider-name string-functions
       - name: git diff
         run: |
           git diff --exit-code || \
-            (echo; echo "Unexpected difference in directories after code generation. Run 'go generate ./...' command and commit."; exit 1)
+            (echo; echo "Unexpected difference in directories after code generation. Run 'go tool tfplugindocs generate' and 'terraform fmt' commands and commit."; exit 1)
 
   # Run acceptance tests in a matrix with Terraform CLI versions
   test:
